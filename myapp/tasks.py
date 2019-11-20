@@ -12,7 +12,7 @@ from .models import Simulation, get_simulation
 
 @app.task
 def simulate_days(sim_id):
-    sim = m_m.Simulation.objects.get(id=sim_id)
+    sim = Simulation.objects.get(id=sim_id)
     print('\n\nstart in simulate_days\n\n')
     it = 0
     while sim.status == True:
