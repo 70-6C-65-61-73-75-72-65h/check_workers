@@ -41,10 +41,8 @@ def simulate(request, action):
         sim.status = False
         sim.save()
     elif action == "enable" and sim.status == False:
-        print('view simulate ok')
         sim.status = True
         sim.save()
-        print('view simulate ok after save')
     context = {
             "simulations_exists": True,
             "days_passed": sim.get_simulation_day(),

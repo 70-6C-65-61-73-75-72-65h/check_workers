@@ -1,7 +1,7 @@
-from myapp.models import Simulation, get_simulation
+# from myapp.models import Simulation, get_simulation
 
-from datetime import timedelta, date
-import time
+# from datetime import timedelta, date
+# import time
 # def daterange(start_date, end_date):
 #     for n in range(int ((end_date - start_date).days)):
 #         yield start_date + timedelta(n)
@@ -34,13 +34,16 @@ import time
 # dates = np.arange(d0, d1, dt).astype(datetime)
 # The use of astype is to convert from numpy.datetime64 to an array of datetime.datetime objects.
 
-def simulate_days():
-    sim = get_simulation()
-    sim.today = sim.today + timedelta(1)
-    time.sleep(1)
-    sim.save()
+# def simulate_days():
+#     sim = get_simulation()
+#     sim.today = sim.today + timedelta(1)
+#     time.sleep(1)
+#     sim.save()
 
-def main():
-    add_days()
+# def main():
+#     add_days()
 
-main()
+# main()
+# status = False
+# status = True if status == False else False
+# print(status)
