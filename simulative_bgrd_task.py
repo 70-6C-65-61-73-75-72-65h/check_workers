@@ -47,3 +47,48 @@
 # status = False
 # status = True if status == False else False
 # print(status)
+
+# import sys
+# sys.setrecursionlimit(1500)
+
+# from calendar import monthrange
+# import datetime
+
+# that_month_day = datetime.date(2019, 11, 21)
+# print(monthrange(that_month_day.year, that_month_day.month)[1])
+import datetime
+import time
+import os
+
+
+import django
+# django.setup()
+
+# os.environ[ 'DJANGO_SETTINGS_MODULE' ] = "app.settings"
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
+
+
+
+def change_staff():
+    # работа только с 1 единственной === последней симуляцией
+    while 1:
+        if mym.Simulation.objects.all().exists():
+            break
+    sim = mym.get_simulation()
+    print(f'\n\n{sim}\n\n')
+    while 1:
+        if sim.status == True:
+            sim.today = sim.today + datetime.timedelta(1)
+            sim.save()
+        time.sleep(2)
+        # there will start the stuff called simulate_erp() and there are will be all population of models
+        # and even user click stop simulation all things after that will be created and saved there
+        sim.refresh_from_db()
+
+# Start execution
+if __name__ == '__main__':
+    print("Starting population script...")
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
+    django.setup()
+    import myapp.models as mym
+    change_staff()
