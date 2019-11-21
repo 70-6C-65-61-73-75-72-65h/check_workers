@@ -12,7 +12,7 @@ from .models import Simulation, get_simulation
 from datetime import timedelta
 import datetime
 import time
-@app.task(name='app.myapp.tasks.simulate_days')
+@app.task
 def simulate_days(sim_id):
     print('\n\n start in simulated day \n\n')
     sim = Simulation.objects.get(id=sim_id)
@@ -20,7 +20,7 @@ def simulate_days(sim_id):
         sim.daemon_active = True
         sim.today = sim.today + timedelta(1)
         sim.save()
-        simulate_days.apply_async(queue='low_priority', args=(instance.id), countdown=5)
+        simulate_days.apply_async(args=(sim_id,), countdown=5)
     print('\n\nend in simulate_days\n\n')
     # if this is the first break from the if sim.status == True condition -> firstly change daemon_active value and then it not gonna be changed
     if sim.daemon_active == True and sim.status == False:
@@ -37,7 +37,7 @@ def simulation_daemon(sender, instance, created, **kwargs):
     # print(f'receiver simulation_daemon status:{instance.status} and daemon_active:{instance.daemon_active}')
     if instance.status == True and instance.daemon_active == False: # тоесть мы только только запустили симуляцию и демона пока нету
         print('start tasks')
-        simulate_days.apply_async(args=[instance.id], queue='low_priority', countdown=5)
+        simulate_days.apply_async(args=(instance.id,), countdown=5)
         print('end tasks')
         # eta=datetime.datetime.now() + timedelta(seconds=5)
         # countdown=5
